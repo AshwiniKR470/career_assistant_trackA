@@ -1,16 +1,24 @@
 # AI Career Assistant - Track A
 
-##  Overview
-AI Career Assistant is a Streamlit-based job search tool that helps users filter jobs by role, location, experience level, and salary range.  
-It connects to the JSearch API to fetch real-time job listings and provides direct application links.
+An AI-powered career assistant built with **Streamlit**.  
+It helps users:
+- Upload resumes and extract skills
+- Search jobs by role, location, experience, and salary
+- View company insights
+
+---
+
 ##  Features
-- Search jobs by role and location
-- Filter by experience (Fresher, Mid-level, Senior)
-- Salary range filter (in LPA, converted to INR)
-- Clickable "Apply Here" links for each job
-- Deployed on Streamlit Cloud for public access
-## Run Locally
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/career-assistant-trackA.git
-   cd career-assistant-trackA
+- **Resume Upload**: Extracts text from PDF resumes and displays them point-wise.
+- **Skill Extraction**: Identifies technical skills (Python, Java, SQL, ML, Cloud, etc.).
+- **Job Search**: Filters jobs by role, location, experience, and salary.
+- **Company Insights**: Shows company details (industry, location, employees).
+
+---
+
+##  Installation
+
+Clone the repository:
+```bash
+git clone https://github.com/AshwiniKR470/career_assistant_trackA.git
+cd career_assistant_trackA

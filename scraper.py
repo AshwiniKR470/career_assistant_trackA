@@ -17,7 +17,7 @@ def scrape_jobs(role, location="India", experience=None, salary_min=None, salary
         querystring["salary_max"] = str(salary_max)
 
     headers = {
-        "X-RapidAPI-Key": "6e1dae31bdmshbc73a0e220750d1p1c1ccbjsn2580ede01379",   # 👈 paste your real key here
+        "X-RapidAPI-Key": "6e1dae31bdmshbc73a0e220750d1p1c1ccbjsn2580ede01379",  
         "X-RapidAPI-Host": "jsearch.p.rapidapi.com"
     }
 
