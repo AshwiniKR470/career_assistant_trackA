@@ -6,3 +6,5 @@ pdfplumber
 pdfminer.six
 pypdfium2
 Pillow
+fpdf2
+
