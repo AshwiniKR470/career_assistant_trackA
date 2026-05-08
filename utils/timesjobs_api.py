@@ -26,7 +26,7 @@ def fetch_timesjobs_jobs(role, location):
     }
 
     try:
-        # ⚠️ Using verify=False to bypass SSL issues
+        #  Using verify=False to bypass SSL issues
         response = requests.get(url, headers=headers, timeout=10, verify=False)
         response.raise_for_status()
     except requests.exceptions.RequestException as e:

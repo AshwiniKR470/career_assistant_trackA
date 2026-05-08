@@ -11,3 +11,9 @@ st.write(
     - **Company Insights**: Explore company culture, benefits, and policies.  
     """
 )
+from utils.db import init_resume_db, init_applications_db, init_preferences_db
+
+init_resume_db()
+init_applications_db()
+init_preferences_db()
+

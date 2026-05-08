@@ -40,7 +40,7 @@ def unified_job_search(role, location, experience="", salary_min=0, salary_max=0
                 "title": "Python Developer",
                 "company": "Infosys",
                 "location": location,
-                "description": "Work on scalable backend systems.",
+                "description": "Work on scalable backend systems (Work From Home available).",
                 "link": "https://careers.infosys.com/apply",
                 "salary": 600000
             },
@@ -48,9 +48,17 @@ def unified_job_search(role, location, experience="", salary_min=0, salary_max=0
                 "title": "Data Analyst",
                 "company": "TCS",
                 "location": location,
-                "description": "Analyze datasets and build dashboards.",
+                "description": "Analyze datasets and build dashboards (Remote option).",
                 "link": "https://careers.tcs.com/apply",
                 "salary": 450000
+            },
+            {
+                "title": "Frontend Engineer",
+                "company": "Wipro",
+                "location": location,
+                "description": "Frontend development in office.",
+                "link": "https://careers.wipro.com/apply",
+                "salary": 500000
             }
         ])
 
@@ -80,4 +88,6 @@ def detect_wfh(description: str) -> bool:
     Returns True if keywords found, else False.
     """
     desc = description.lower()
-    return any(keyword in desc for keyword in ["work from home", "remote", "hybrid"])
+    return any(keyword in desc for keyword in [
+        "work from home", "remote", "wfh", "home-based", "telecommute", "hybrid"
+    ])

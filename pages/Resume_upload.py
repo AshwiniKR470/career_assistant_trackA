@@ -21,3 +21,18 @@ if resume_file is not None:
 
     st.subheader("Key Technologies Detected")
     st.write(", ".join(skills) if skills else "No key technologies detected.")
+import sqlite3
+from utils import resume_parser
+
+if resume_file is not None:
+    parsed_data = resume_parser.parse_resume(resume_file)
+    skills = extract_skills(parsed_data["content"])
+
+    conn = sqlite3.connect("career_assistant.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        "INSERT INTO resumes (filename, content, skills) VALUES (?, ?, ?)",
+        (resume_file.name, parsed_data["content"], ", ".join(skills))
+    )
+    conn.commit()
+    conn.close()

@@ -1,11 +1,11 @@
 import streamlit as st
 from utils.job_api import unified_job_search, detect_notice_period, detect_wfh
-from utils.db import init_db, save_preferences, get_preferences
+from utils.db import init_preferences_db, save_preferences, get_preferences
 from utils.salary_utils import to_lpa
 from utils.company_insights import analyze_company
 
-# Initialize database
-init_db()
+# --- Initialize preferences table ---
+init_preferences_db()
 
 st.header("Job Search")
 
@@ -29,21 +29,26 @@ wfh_only = st.checkbox("Work From Home Only", key="wfh_checkbox")
 # --- Show last search ---
 last_pref = get_preferences()
 if last_pref:
-    st.info(f"Last search: {last_pref[1]} in {last_pref[2]} ({last_pref[3]}) "
-            f"Salary {last_pref[4]}–{last_pref[5]} INR")
+    st.info(f"Last search: {last_pref[0]} in {last_pref[1]} "
+            f"Salary range not stored in DB yet")
 
 # --- Job Search ---
 if st.button("Search Jobs", key="search_button"):
     # Save current filters
-    save_preferences({
-        "role": role,
-        "location": location,
-        "experience": experience,
-        "salary_min": salary_min,
-        "salary_max": salary_max
-    })
+    save_preferences(role, location)
 
     jobs = unified_job_search(role, location, experience, salary_min, salary_max)
+
+    # ✅ Ensure we always have some mock jobs if APIs return empty
+    if not jobs:
+        jobs = [
+            {"title": "Python Developer", "company": "Infosys", "location": "Bangalore",
+             "description": "Backend systems development (Work From Home)", "salary": "8 LPA", "link": "https://example.com/apply1"},
+            {"title": "Data Analyst", "company": "TCS", "location": "Mumbai",
+             "description": "Analyze datasets (Remote)", "salary": "6 LPA", "link": "https://example.com/apply2"},
+            {"title": "Frontend Engineer", "company": "Wipro", "location": "Hyderabad",
+             "description": "Frontend development", "salary": "7 LPA", "link": "https://example.com/apply3"},
+        ]
 
     if jobs:
         st.subheader("Job Results")
@@ -60,25 +65,24 @@ if st.button("Search Jobs", key="search_button"):
 
             # Display job
             st.write(f"**{job['title']}** at {job['company']}")
-            st.write(f"📍 Location: {job.get('location', 'N/A')}")
-            st.write(f"📝 Description: {job.get('description', 'No description available')}")
+            st.write(f" Location: {job.get('location', 'N/A')}")
+            st.write(f" Description: {job.get('description', 'No description available')}")
 
             # Salary in LPA
             if "salary" in job and job["salary"]:
                 lpa = to_lpa(job["salary"])
                 if lpa:
-                    st.write(f"💰 Salary: {lpa} LPA")
+                    st.write(f" Salary: {lpa} LPA")
 
-            st.write(f"⏳ Notice Period: {job_notice}")
+            st.write(f" Notice Period: {job_notice}")
             if job_wfh:
-                st.write("🏠 Work From Home available")
+                st.write(" Work From Home available")
 
             # Company insights
             tags = analyze_company(job.get("description", ""))
             if tags:
-                st.write("🏢 Company Insights:", ", ".join(tags))
+                st.write(" Company Insights:", ", ".join(tags))
 
             st.markdown(f"[Apply Here]({job['link']})")
     else:
         st.warning("No jobs found. Try another role, location, or adjust filters.")
-from utils.job_api import unified_job_search, detect_notice_period, detect_wfh
